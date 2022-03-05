@@ -1,10 +1,11 @@
+import { Box, Text } from "@chakra-ui/react";
 import { useState, VFC } from "react";
 
 const App: VFC = () => {
 	return (
-		<div>
-			<p>hello</p>
-		</div>
+		<Box>
+			<Text>hello react nest prisma graphql</Text>
+		</Box>
 	);
 };
 
