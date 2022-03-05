@@ -44,6 +44,11 @@ export type PostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isPublished: boolean }> };
 
+export type PostsOnlyTitleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PostsOnlyTitleQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', title: string }> };
+
 
 export const PostsDocument = gql`
     query Posts {
@@ -82,3 +87,37 @@ export function usePostsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Post
 export type PostsQueryHookResult = ReturnType<typeof usePostsQuery>;
 export type PostsLazyQueryHookResult = ReturnType<typeof usePostsLazyQuery>;
 export type PostsQueryResult = Apollo.QueryResult<PostsQuery, PostsQueryVariables>;
+export const PostsOnlyTitleDocument = gql`
+    query postsOnlyTitle {
+  posts {
+    title
+  }
+}
+    `;
+
+/**
+ * __usePostsOnlyTitleQuery__
+ *
+ * To run a query within a React component, call `usePostsOnlyTitleQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePostsOnlyTitleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsOnlyTitleQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostsOnlyTitleQuery(baseOptions?: Apollo.QueryHookOptions<PostsOnlyTitleQuery, PostsOnlyTitleQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PostsOnlyTitleQuery, PostsOnlyTitleQueryVariables>(PostsOnlyTitleDocument, options);
+      }
+export function usePostsOnlyTitleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PostsOnlyTitleQuery, PostsOnlyTitleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PostsOnlyTitleQuery, PostsOnlyTitleQueryVariables>(PostsOnlyTitleDocument, options);
+        }
+export type PostsOnlyTitleQueryHookResult = ReturnType<typeof usePostsOnlyTitleQuery>;
+export type PostsOnlyTitleLazyQueryHookResult = ReturnType<typeof usePostsOnlyTitleLazyQuery>;
+export type PostsOnlyTitleQueryResult = Apollo.QueryResult<PostsOnlyTitleQuery, PostsOnlyTitleQueryVariables>;

@@ -1,33 +1,16 @@
-import { Box, Button, HStack, Text } from "@chakra-ui/react";
+import { Box, Heading, VStack } from "@chakra-ui/react";
 import { VFC } from "react";
-import { usePostsQuery } from "./graphql/generated";
+import Posts from "./components/posts";
+import PostsOnlyTitle from "./components/postsOnlyTitle";
 
 const App: VFC = () => {
-	const { loading, error, data } = usePostsQuery();
-	const graphqlQueryTest = () => {
-		console.log(data);
-	};
-
-	if (error) return <Text>err</Text>;
-
 	return (
 		<Box>
-			<Text>hello react nest prisma graphql</Text>
-			<Button onClick={graphqlQueryTest}>see console log!</Button>
-			{loading ? (
-				<Text>loading...</Text>
-			) : (
-				<HStack spacing={8}>
-					{data &&
-						data.posts.map((d) => (
-							<Box key={d.id}>
-								<Text>{d.id}</Text>
-								<Text>{d.title}</Text>
-								<Text>{d.content}</Text>
-							</Box>
-						))}
-				</HStack>
-			)}
+			<VStack spacing={8}>
+				<Heading>hello react nest prisma graphql</Heading>
+				<Posts />
+				<PostsOnlyTitle />
+			</VStack>
 		</Box>
 	);
 };
