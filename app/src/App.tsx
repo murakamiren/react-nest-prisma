@@ -1,41 +1,33 @@
-import { gql, useQuery } from "@apollo/client";
-import { Box, Button, Text } from "@chakra-ui/react";
-import { useState, VFC } from "react";
+import { Box, Button, HStack, Text } from "@chakra-ui/react";
+import { VFC } from "react";
+import { usePostsQuery } from "./graphql/generated";
 
 const App: VFC = () => {
-	const [posts, setPost] = useState<[]>([]);
-	const postGql = gql`
-		query {
-			posts {
-				id
-				title
-				content
-				isPublished
-			}
-		}
-	`;
-
-	const { loading, error, data } = useQuery(postGql);
+	const { loading, error, data } = usePostsQuery();
 	const graphqlQueryTest = () => {
-		console.log(data.posts);
-		setPost(data.posts);
+		console.log(data);
 	};
-
-	if (loading) return <Text>loading...</Text>;
 
 	if (error) return <Text>err</Text>;
 
 	return (
 		<Box>
 			<Text>hello react nest prisma graphql</Text>
-			<Button onClick={graphqlQueryTest}>gql Query!</Button>
-			{posts.map((d: any) => (
-				<Box key={d.id}>
-					<Text>{d.id}</Text>
-					<Text>{d.title}</Text>
-					<Text>{d.content}</Text>
-				</Box>
-			))}
+			<Button onClick={graphqlQueryTest}>see console log!</Button>
+			{loading ? (
+				<Text>loading...</Text>
+			) : (
+				<HStack spacing={8}>
+					{data &&
+						data.posts.map((d) => (
+							<Box key={d.id}>
+								<Text>{d.id}</Text>
+								<Text>{d.title}</Text>
+								<Text>{d.content}</Text>
+							</Box>
+						))}
+				</HStack>
+			)}
 		</Box>
 	);
 };
