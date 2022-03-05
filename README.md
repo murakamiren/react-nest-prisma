@@ -1,3 +1,9 @@
-# react-nest-prisma
+# react-nest-prisma-graphql-apollo
 
-準備中
+## front 周り
+
+vite react typescirpt graphql apollo graphql-codegen
+
+## backend
+
+nestJS graphql apollo-server prisma mariadb
