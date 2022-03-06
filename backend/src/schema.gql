@@ -10,7 +10,10 @@ type Post {
 }
 
 type Query {
-  posts: [Post!]!
+  getPosts: [Post!]!
+  getPostById(id: Float!): [Post!]!
+  getPostBySelectedId: [Post!]!
+  getPostByIsPublished: [Post!]!
 }
 
 type Mutation {

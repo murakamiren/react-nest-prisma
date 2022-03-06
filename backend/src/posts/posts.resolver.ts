@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { PrismaService } from 'src/prisma.service';
 import { Post } from './models/post.model';
 
@@ -7,8 +7,29 @@ export class PostResolver {
   constructor(private prisma: PrismaService) {}
 
   @Query(() => [Post])
-  async posts() {
+  async getPosts() {
     return this.prisma.post.findMany();
+  }
+
+  @Query(() => [Post])
+  async getPostById(@Args('id') postId: number) {
+    return this.prisma.post.findMany({
+      where: { id: postId },
+    });
+  }
+
+  @Query(() => [Post])
+  async getPostBySelectedId() {
+    return this.prisma.post.findMany({
+      where: { id: 1 },
+    });
+  }
+
+  @Query(() => [Post])
+  async getPostByIsPublished() {
+    return this.prisma.post.findMany({
+      where: { isPublished: true },
+    });
   }
 
   @Mutation(() => Post)
