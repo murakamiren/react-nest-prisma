@@ -3,9 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { join } from 'path';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PostResolver } from './posts/posts.resolver';
+import { PostsResolver } from './posts/posts.resolver';
 import { PrismaService } from './prisma.service';
 
 @Module({
@@ -15,9 +13,10 @@ import { PrismaService } from './prisma.service';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService, PrismaService, PostResolver],
+  controllers: [],
+  providers: [PrismaService, PostsResolver],
 })
 export class AppModule {}
